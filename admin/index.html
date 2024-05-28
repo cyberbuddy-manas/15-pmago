@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Admin Dashboard | Pmago</title>
+
+    <!--=== Meta Tags ===-->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--===== Favicons =====-->
+    <link rel="apple-touch-icon" sizes="180x180" href="../images/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../images/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../images/favicons/favicon-16x16.png">
+    <link rel="manifest" href="../images/favicons/site.webmanifest">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+
+
+    <!--==== Bootstrap ====-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous">
+    </script>
+
+    <style>
+        /*
+    DEMO STYLE
+*/
+
+        @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #fafafa;
+        }
+
+        p {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.1em;
+            font-weight: 300;
+            line-height: 1.7em;
+            color: #999;
+        }
+
+        a,
+        a:hover,
+        a:focus {
+            color: inherit;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .navbar {
+            padding: 15px 10px;
+            background: #fff;
+            border: none;
+            border-radius: 0;
+            margin-bottom: 40px;
+            box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-btn {
+            box-shadow: none;
+            outline: none !important;
+            border: none;
+        }
+
+        .line {
+            width: 100%;
+            height: 1px;
+            border-bottom: 1px dashed #ddd;
+            margin: 40px 0;
+        }
+
+        /* ---------------------------------------------------
+    SIDEBAR STYLE
+----------------------------------------------------- */
+
+        .wrapper {
+            display: flex;
+            width: 100%;
+            align-items: stretch;
+        }
+
+        #sidebar {
+            min-width: 250px;
+            max-width: 250px;
+            background: #081651;
+            color: #fff;
+            transition: all 0.3s;
+        }
+
+        #sidebar.active {
+            margin-left: -250px;
+        }
+
+        #sidebar .sidebar-header {
+            padding: 20px;
+            background: #13043b;
+        }
+
+        #sidebar ul.components {
+            padding: 20px 0;
+            border-bottom: 1px solid #47748b;
+        }
+
+        #sidebar ul p {
+            color: #fff;
+            padding: 10px;
+        }
+
+        #sidebar ul li a {
+            padding: 10px;
+            font-size: 1.1em;
+            display: block;
+        }
+
+        #sidebar ul li a:hover {
+            color: #7388d5;
+            background: #fff;
+        }
+
+        #sidebar ul li.active>a,
+        a[aria-expanded="true"] {
+            color: #fff;
+            background: #6d7fcc;
+        }
+
+        a[data-toggle="collapse"] {
+            position: relative;
+        }
+
+        .dropdown-toggle::after {
+            display: block;
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+        }
+
+        ul ul a {
+            font-size: 0.9em !important;
+            padding-left: 30px !important;
+            background: #6d7fcc;
+        }
+
+        ul.CTAs {
+            padding: 20px;
+        }
+
+        ul.CTAs a {
+            text-align: center;
+            font-size: 0.9em !important;
+            display: block;
+            border-radius: 5px;
+            margin-bottom: 5px;
+        }
+
+        a.download {
+            background: #fff;
+            color: #ff0000;
+        }
+
+        a.article,
+        a.article:hover {
+            background: #6d7fcc !important;
+            color: #fff !important;
+        }
+
+        .pro_discount {
+            padding: 0px;
+            box-shadow: -1px 3px 19px 0px #d9d8d8;
+            border-radius: 6px;
+        }
+
+        .form_heading {
+            padding: 20px 30px;
+            background-color: #081651;
+            color: #fff;
+            border-top-right-radius: 6px;
+            border-top-left-radius: 6px;
+        }
+
+        .form-body {
+            padding: 20px 25px;
+        }
+
+        #submitbtn {
+            width: 92px;
+            padding: 4px 10px;
+            background-color: #081651;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+        }
+
+        /* ---------------------------------------------------
+    CONTENT STYLE
+----------------------------------------------------- */
+
+        #content {
+            width: 100%;
+            padding: 20px;
+            min-height: 100vh;
+            transition: all 0.3s;
+        }
+
+        /* -----------Snackbar----------------------- */
+        #snackbar {
+            visibility: hidden;
+            min-width: 250px;
+            margin-left: -125px;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(2px);
+            color: #fff;
+            text-align: center;
+            border-radius: 2px;
+            padding: 16px;
+            position: fixed;
+            z-index: 1000;
+            left: 50%;
+            bottom: 30px;
+            font-size: 17px;
+            border-radius: 3px;
+        }
+
+        #snackbar.show {
+            visibility: visible;
+            -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+            animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        }
+
+        /* ---------------------------------------------------
+    MEDIAQUERIES
+----------------------------------------------------- */
+
+        @media (max-width: 768px) {
+            #sidebar {
+                margin-left: -250px;
+            }
+
+            #sidebar.active {
+                margin-left: 0;
+            }
+
+            #sidebarCollapse span {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body id="root">
+    <div class="wrapper">
+        <!-- Sidebar  -->
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <h3>Pmago Admin</h3>
+            </div>
+
+            <ul class="list-unstyled components">
+                <p>Navigate</p>
+                <li>
+                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false"
+                        class="dropdown-toggle">Website</a>
+                    <ul class="collapse list-unstyled" id="homeSubmenu">
+                        <li>
+                            <a href="/index.html">Home</a>
+                        </li>
+                        <li>
+                            <a href="/shop.html">Shop</a>
+                        </li>
+                        <li>
+                            <a href="/about.html">About</a>
+                        </li>
+                        <li>
+                            <a href="/blog.html">Blog</a>
+                        </li>
+                        <li>
+                            <a href="/contact.html">Contact</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="active">
+                    <a href="/demo-payment-portal/">Dashboard</a>
+                </li>
+                <li>
+                    <a href="/admin/current-orders.html">Current Orders</a>
+                </li>
+                <!-- <li>
+                    <a href="./password_requests.html">Password Requests</a>
+                </li> -->
+                <!-- <li>
+                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false"
+                        class="dropdown-toggle">Pages</a>
+                    <ul class="collapse list-unstyled" id="pageSubmenu">
+                        <li>
+                            <a href="#">Page 1</a>
+                        </li>
+                        <li>
+                            <a href="#">Page 2</a>
+                        </li>
+                        <li>
+                            <a href="#">Page 3</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">Portfolio</a>
+                </li>
+                <li>
+                    <a href="#">Contact</a>
+                </li> -->
+            </ul>
+
+            <!-- <ul class="list-unstyled CTAs">
+                <li>
+                    <a href="https://bootstrapious.com/tutorial/files/sidebar.zip" class="download">Download source</a>
+                </li>
+                <li>
+                    <a href="https://bootstrapious.com/p/bootstrap-sidebar" class="article">Back to article</a>
+                </li>
+            </ul> -->
+        </nav>
+
+        <!-- Page Content  -->
+        <div id="content">
+
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+
+                    <button style="background-color: #6d7fcc;color: white;" type="button" id="sidebarCollapse"
+                        class="btn btn-info">
+                        <i class="fas fa-align-left"></i>
+                        ☰ Open Panel
+                        <span></span>
+                    </button>
+                    <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="fas fa-align-justify"></i>
+                        ☰
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="nav navbar-nav ml-auto" style="text-align: right;">
+                            <!-- <li class="nav-item">
+                                <a class="nav-link" href="./superadmin.html">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Users</a>
+                            </li> -->
+                            <li class="nav-item">
+                                <a onclick="logout()" class="nav-link" style="color: red;" href="#">Logout ⚠</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+            <h2 class="pb-4">Admin Portal</h2>
+            <div class="row" style="overflow-x: scroll;" style="padding:16px">
+                <table class="table table-light table-hover">
+                    <tr>
+                        <th>ID</th>
+                        <th>Product Name</th>
+                        <th>Discount Applied</th>
+                        <th>Original Amount</th>
+                        <th>Discounted Price</th>
+                        <th>Action</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td><input type="text" class="name" value="Product"></td>
+                        <td><input type="number" class="discount" value="0"></td>
+                        <td><input type="number" value="0" class="og-price"></td>
+                        <td><input type="text" class="dis-price" value="0" disabled></td>
+                        <td><button onclick="setNewDetails(1)">Change</button></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td><input type="text" class="name" value="Product"></td>
+                        <td><input type="number" class="discount" value="0"></td>
+                        <td><input type="number" value="0" class="og-price"></td>
+                        <td><input type="text" class="dis-price" value="0" disabled></td>
+                        <td><button onclick="setNewDetails(2)">Change</button></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td><input type="text" class="name" value="Product"></td>
+                        <td><input type="number" class="discount" value="0"></td>
+                        <td><input type="number" value="0" class="og-price"></td>
+                        <td><input type="text" class="dis-price" value="0" disabled></td>
+                        <td><button onclick="setNewDetails(3)">Change</button></td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td><input type="text" class="name" value="Product"></td>
+                        <td><input type="number" class="discount" value="0"></td>
+                        <td><input type="number" value="0" class="og-price"></td>
+                        <td><input type="text" class="dis-price" value="0" disabled></td>
+                        <td><button onclick="setNewDetails(4)">Change</button></td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td><input type="text" class="name" value="Product"></td>
+                        <td><input type="number" class="discount" value="0"></td>
+                        <td><input type="number" value="0" class="og-price"></td>
+                        <td><input type="text" class="dis-price" value="0" disabled></td>
+                        <td><button onclick="setNewDetails(5)">Change</button></td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td><input type="text" class="name" value="Product"></td>
+                        <td><input type="number" class="discount" value="0"></td>
+                        <td><input type="number" value="0" class="og-price"></td>
+                        <td><input type="text" class="dis-price" value="0" disabled></td>
+                        <td><button onclick="setNewDetails(6)">Change</button></td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td><input type="text" class="name" value="Product"></td>
+                        <td><input type="number" class="discount" value="0"></td>
+                        <td><input type="number" value="0" class="og-price"></td>
+                        <td><input type="text" class="dis-price" value="0" disabled></td>
+                        <td><button onclick="setNewDetails(7)">Change</button></td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td><input type="text" class="name" value="Product"></td>
+                        <td><input type="number" class="discount" value="0"></td>
+                        <td><input type="number" value="0" class="og-price"></td>
+                        <td><input type="text" class="dis-price" value="0" disabled></td>
+                        <td><button onclick="setNewDetails(8)">Change</button></td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td><input type="text" class="name" value="Product"></td>
+                        <td><input type="number" class="discount" value="0"></td>
+                        <td><input type="number" value="0" class="og-price"></td>
+                        <td><input type="text" class="dis-price" value="0" disabled></td>
+                        <td><button onclick="setNewDetails(9)">Change</button></td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td><input type="text" class="name" value="Product"></td>
+                        <td><input type="number" class="discount" value="0"></td>
+                        <td><input type="number" value="0" class="og-price"></td>
+                        <td><input type="text" class="dis-price" value="0" disabled></td>
+                        <td><button onclick="setNewDetails(10)">Change</button></td>
+                    </tr>
+                    <tr>
+                        <td>11</td>
+                        <td><input type="text" class="name" value="Product"></td>
+                        <td><input type="number" class="discount" value="0"></td>
+                        <td><input type="number" value="0" class="og-price"></td>
+                        <td><input type="text" class="dis-price" value="0" disabled></td>
+                        <td><button onclick="setNewDetails(11)">Change</button></td>
+                    </tr>
+                    <tr>
+                        <td>12</td>
+                        <td><input type="text" class="name" value="Product"></td>
+                        <td><input type="number" class="discount" value="0"></td>
+                        <td><input type="number" value="0" class="og-price"></td>
+                        <td><input type="text" class="dis-price" value="0" disabled></td>
+                        <td><button onclick="setNewDetails(12)">Change</button></td>
+                    </tr>
+                    <tr>
+                        <td>13</td>
+                        <td><input type="text" class="name" value="Product"></td>
+                        <td><input type="number" class="discount" value="0"></td>
+                        <td><input type="number" value="0" class="og-price"></td>
+                        <td><input type="text" class="dis-price" value="0" disabled></td>
+                        <td><button onclick="setNewDetails(13)">Change</button></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="row pt-5" style="overflow-x: scroll;">
+                <h2>Add New Voucher Code</h2>
+                <div class="py-3 d-flex gap-3">
+                    <input type="text" id="voucherCode" placeholder="New Code">
+                    <input type="number" id="percentage" placeholder="Off Amount">
+                    <input type="submit" onclick="addVouchers()" value="Submit">
+                </div>
+                <hr>
+                <div class="py-3">
+                    <h2 class="pb-3">Existing Vouchers</h2>
+                    <table id="vouchersExisting" class="table table-light table-hover">
+                        <tr>
+                            <th>SrNo.</th>
+                            <th>Voucher Code</th>
+                            <th>Discounted Amount</th>
+                            <th>Action</th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="row pt-5" style="overflow-x: scroll;">
+                <h2 class="pb-3">Change Product Description</h2>
+                <table id="proDesc" class="table table-light table-hover">
+                    <tr>
+                        <th>SrNo.</th>
+                        <th>Product Name</th>
+                        <th>Description</th>
+                        <th>Action</th>
+                    </tr>
+                </table>
+            </div>
+            <div id="snackbar"></div>
+        </div>
+    </div>
+
+    <!-- jQuery CDN - Slim version (=without AJAX) -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
+    <!-- Popper.JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
+        integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous">
+    </script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
+        integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous">
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar').toggleClass('active');
+            });
+        });
+
+        document.onkeyup = (e) => {
+            if (e.ctrlKey && e.which == 66) {
+                $('#sidebar').toggleClass('active');
+            }
+        };
+    </script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyAiYIJSfb-Nh_-vcbETuNG5q-ldkbjIeRU",
+            authDomain: "pmago-1385f.firebaseapp.com",
+            projectId: "pmago-1385f",
+            storageBucket: "pmago-1385f.appspot.com",
+            messagingSenderId: "421779663220",
+            appId: "1:421779663220:web:8e88f765ba81be1a58a421",
+            measurementId: "G-YEPYSVHMB3"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+
+        // Get a reference to the Firestore database
+        var db = firebase.firestore();
+
+        function loginAllow() {
+            if (localStorage.getItem('PmagoAdminId') == undefined || localStorage.getItem('PmagoAdminId') != 'pmago' ||
+                localStorage.getItem('PmagoAdminPass') == undefined || localStorage.getItem('PmagoAdminPass') !=
+                'pmago@123') {
+                var a = prompt('Username');
+                if (a != 'pmago') {
+                    alert('Invalid username');
+                    document.getElementById('root').innerHTML = 'Refresh the page to try again';
+                    return;
+                }
+                localStorage.setItem('PmagoAdminId', a);
+
+                var b = prompt('Password');
+                if (b != 'pmago@123') {
+                    alert('Invalid password');
+                    document.getElementById('root').innerHTML = 'Refresh the page to try again';
+                    return;
+                }
+                localStorage.setItem('PmagoAdminPass', b);
+            }
+        }
+        loginAllow();
+
+        async function setNewDetails(pro_id) {
+            const docRef = db.collection("product_discount").doc(`${pro_id}`);
+            await docRef.set({
+                discount_percentage: document.querySelectorAll(".discount")[pro_id - 1].value,
+                price: document.querySelectorAll(".og-price")[pro_id - 1].value,
+                name: document.querySelectorAll(".name")[pro_id - 1].value
+            }, {
+                merge: true
+            });
+
+            toast("Successfully applied!!")
+        }
+
+        async function addVouchers() {
+            let voucherCode = document.querySelector("#voucherCode");
+            let percentage = document.querySelector("#percentage");
+
+            if (!voucherCode.value) {
+                toast("Please enter valid voucher code");
+                return;
+            }
+
+            if (!percentage.value) {
+                toast("Please enter valid percentage code");
+                return;
+            }
+
+            await db.collection("discounts").doc(`${voucherCode.value}`).set({
+                code: voucherCode.value,
+                discount: percentage.value
+            });
+
+            toast(`Voucher Code: ${voucherCode.value} set successfully!!`)
+            setTimeout(() => {
+                location.reload();
+            }, 1500);
+        }
+
+        async function getVouchers() {
+            function genVoucherRow(srno, voucher, discount) {
+                const newRow = document.createElement("tr");
+
+                const newSerialNumber = document.createElement("td");
+                newSerialNumber.textContent = srno;
+                newRow.appendChild(newSerialNumber);
+
+                const newVoucherCode = document.createElement("td");
+                newVoucherCode.textContent = voucher;
+                newRow.appendChild(newVoucherCode);
+
+                const newVoucherAmount = document.createElement("td");
+                newVoucherAmount.textContent = discount;
+                newRow.appendChild(newVoucherAmount);
+
+                const removeButtonCell = document.createElement("td");
+                const removeButton = document.createElement("button");
+                removeButton.textContent = "Remove";
+                removeButton.addEventListener("click", function () {
+                    deleteVoucher(voucher);
+                });
+                removeButtonCell.appendChild(removeButton);
+                newRow.appendChild(removeButtonCell);
+
+                document.querySelector("#vouchersExisting tbody").appendChild(newRow);
+            }
+
+            let vouchers = await db.collection("discounts").get();
+
+            let temp = 1;
+            vouchers.forEach(voucher => {
+                genVoucherRow(temp, voucher.data().code, voucher.data().discount);
+                temp++;
+            });
+        }
+        getVouchers();
+
+        async function getDescription() {
+            function genDescriptionRow(srno, product, description, id) {
+                const newRow = document.createElement("tr");
+
+                const newSerialNumber = document.createElement("td");
+                newSerialNumber.textContent = srno;
+                newRow.appendChild(newSerialNumber);
+
+                const newProductName = document.createElement("td");
+                const newProductNameText = document.createElement("p");
+                newProductNameText.textContent = product;
+                newProductNameText.style.color = "black";
+                newProductName.appendChild(newProductNameText);
+                newRow.appendChild(newProductName);
+
+                const newProductDescription = document.createElement("td");
+                const newProductDescriptionTextarea = document.createElement("textarea");
+                newProductDescriptionTextarea.id = "desc" + srno;
+                newProductDescriptionTextarea.cols = 35;
+                newProductDescriptionTextarea.rows = 5;
+                newProductDescriptionTextarea.textContent =
+                    description;
+                newProductDescription.appendChild(newProductDescriptionTextarea);
+                newRow.appendChild(newProductDescription);
+
+                const changeDescriptionButtonCell = document.createElement("td");
+                const changeDescriptionButton = document.createElement("button");
+                changeDescriptionButton.textContent = "Change";
+                changeDescriptionButton.addEventListener("click", function () {
+                    changeDescription(
+                        id);
+                });
+                changeDescriptionButtonCell.appendChild(changeDescriptionButton);
+                newRow.appendChild(changeDescriptionButtonCell);
+
+                document.querySelector("#proDesc tbody").appendChild(newRow);
+            }
+
+            let descriptions = await db.collection("product_discount").get();
+            let temp = 1;
+            descriptions.forEach(description => {
+                // console.log(description.id);
+                genDescriptionRow(temp, description.data().name, description.data().desc, description.id);
+                temp++;
+            });
+        }
+        getDescription();
+
+        async function changeDescription(id) {
+            await db.collection("product_discount").doc(`${id}`).set({
+                desc: document.querySelector("#desc" + id).value
+            }, {
+                merge: true
+            });
+
+            toast("Description changed successfully.")
+        }
+
+        async function deleteVoucher(voucher) {
+            await db.collection("discounts").doc(`${voucher}`).delete();
+            toast("Voucher deleted successfully.")
+
+            setTimeout(() => {
+                location.reload();
+            }, 1500);
+        }
+
+        async function getProductDetails() {
+            for (let i = 1; i < 14; i++) {
+                const docRef = db.collection("product_discount").doc(`${i}`);
+                const snapshot = await docRef.get();
+
+                document.querySelectorAll(".discount")[i - 1].value = snapshot.data().discount_percentage;
+                document.querySelectorAll(".og-price")[i - 1].value = snapshot.data().price;
+                document.querySelectorAll(".name")[i - 1].value = snapshot.data().name;
+                document.querySelectorAll(".dis-price")[i - 1].value = snapshot.data().price - (snapshot.data()
+                    .price * (snapshot.data()
+                        .discount_percentage / 100));
+            }
+        }
+        getProductDetails();
+
+        function logout() {
+            localStorage.removeItem('PmagoAdminId');
+            localStorage.removeItem('PmagoAdminPass');
+            location.reload();
+        }
+
+        function toast(msg) {
+            var x = document.getElementById("snackbar");
+            x.innerHTML = msg;
+            x.className = "show";
+            setTimeout(function () {
+                x.className = x.className.replace("show", "");
+            }, 3000);
+        }
+    </script>
+</body>
+
+</html>
